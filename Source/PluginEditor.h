@@ -1,17 +1,16 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "ModernLookAndFeel.h"
 #include "PluginProcessor.h"
-#include "CustomKnob.h"
-#include "CustomSlider.h"
-#include "MultiStateButton.h"
-#include "TextElement.h"
 #include "WaveDisplay.h"
 
-class SmexoscopeAudioProcessorEditor : public juce::AudioProcessorEditor, private juce::Timer
+class SmexoscopeAudioProcessorEditor : public juce::AudioProcessorEditor,
+                                       private juce::Timer
 {
 public:
-    SmexoscopeAudioProcessorEditor(SmexoscopeAudioProcessor&);
+    explicit SmexoscopeAudioProcessorEditor(SmexoscopeAudioProcessor&);
+    ~SmexoscopeAudioProcessorEditor() override;
 
     void paint(juce::Graphics&) override;
     void resized() override;
@@ -20,37 +19,64 @@ private:
     void timerCallback() override;
     void updateParameters();
 
+    void configureKnob(juce::Slider& knob, double defaultValue, const juce::String& tooltip);
+    void configureToggle(juce::ToggleButton& button, const juce::String& text, const juce::String& tooltip);
+
+    juce::String formatMetricValue(float value) const;
+    juce::String formatAnalysisValue(float value, int decimals = 5) const;
+
+    void drawSection(juce::Graphics& g, juce::Rectangle<int> bounds, const juce::String& title) const;
+
     SmexoscopeAudioProcessor& audioProcessor;
     Smexoscope& effect;
 
-    juce::Image backgroundImage { juce::ImageCache::getFromMemory(BinaryData::body_png, BinaryData::body_pngSize) };
-    juce::Image headsImage { juce::ImageCache::getFromMemory(BinaryData::heads_png, BinaryData::heads_pngSize) };
-    juce::Image readoutImage { juce::ImageCache::getFromMemory(BinaryData::readout_png, BinaryData::readout_pngSize) };
-    juce::Image knobImage { juce::ImageCache::getFromMemory(BinaryData::blue_knob1_4_png, BinaryData::blue_knob1_4_pngSize) };
-    juce::Image retrigModeImage { juce::ImageCache::getFromMemory(BinaryData::free_etc_png, BinaryData::free_etc_pngSize) };
-    juce::Image leftRightImage { juce::ImageCache::getFromMemory(BinaryData::lefr_right_png, BinaryData::lefr_right_pngSize) };
-    juce::Image onOffImage { juce::ImageCache::getFromMemory(BinaryData::off_on_png, BinaryData::off_on_pngSize) };
-    juce::Image sliderImage { juce::ImageCache::getFromMemory(BinaryData::slider_new_png, BinaryData::slider_new_pngSize) };
+    ModernLookAndFeel lookAndFeel;
+    juce::TooltipWindow tooltipWindow;
+    juce::ComponentBoundsConstrainer constrainer;
 
-    CustomKnob timeKnob { knobImage, true, 0.75 };
-    CustomKnob ampKnob { knobImage, true, 0.5 };
-    CustomKnob intTrigSpeedKnob { knobImage, true, 0.5 };
-    CustomKnob retrigThreshKnob { knobImage, true, 0.5 };
+    juce::Slider timeKnob;
+    juce::Slider ampKnob;
+    juce::Slider intTrigSpeedKnob;
+    juce::Slider retrigThreshKnob;
+    juce::Slider retrigLevelSlider;
 
-    CustomSlider retrigLevelSlider { sliderImage };
+    juce::ComboBox triggerModeBox;
 
-    MultiStateButton retriggerModeButton { retrigModeImage, true, 5 };
-    MultiStateButton syncRedrawButton { onOffImage, true, 2 };
-    MultiStateButton freezeButton { onOffImage, true, 2 };
-    MultiStateButton dcKillButton { onOffImage, true, 2 };
-    MultiStateButton channelSelectionButton { leftRightImage, true, 2 };
-
-    TextElement timeText;
-    TextElement ampText;
-    TextElement speedText;
-    TextElement threshText;
+    juce::ToggleButton syncRedrawButton;
+    juce::ToggleButton freezeButton;
+    juce::ToggleButton dcKillButton;
+    juce::ToggleButton rightChannelButton;
 
     WaveDisplay waveDisplay;
+
+    juce::Rectangle<int> displaySection;
+    juce::Rectangle<int> triggerSection;
+    juce::Rectangle<int> optionsSection;
+    juce::Rectangle<int> analysisSection;
+
+    juce::Rectangle<int> timeLabelBounds;
+    juce::Rectangle<int> ampLabelBounds;
+    juce::Rectangle<int> speedLabelBounds;
+    juce::Rectangle<int> threshLabelBounds;
+    juce::Rectangle<int> triggerModeLabelBounds;
+    juce::Rectangle<int> triggerLevelLabelBounds;
+
+    juce::Rectangle<int> timeValueBounds;
+    juce::Rectangle<int> ampValueBounds;
+    juce::Rectangle<int> speedValueBounds;
+    juce::Rectangle<int> threshValueBounds;
+
+    juce::String timeValueText;
+    juce::String ampValueText;
+    juce::String speedValueText;
+    juce::String threshValueText;
+
+    juce::String analysisYText { "--" };
+    juce::String analysisYDbText { "--" };
+    juce::String analysisSamplesText { "--" };
+    juce::String analysisSecondsText { "--" };
+    juce::String analysisMsText { "--" };
+    juce::String analysisHzText { "--" };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SmexoscopeAudioProcessorEditor)
 };

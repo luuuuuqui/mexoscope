@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="PJFjzP" name="s(M)exoscope" projectType="audioplug" version="1.0.1"
-              bundleIdentifier="com.smartelectronix.sMexoscope" includeBinaryInAppConfig="1"
+              bundleIdentifier="com.kwwala.sMexoscope" includeBinaryInAppConfig="1"
               buildVST="0" buildVST3="1" buildAU="1" buildAUv3="0" buildRTAS="0"
               buildAAX="0" pluginName="s(M)exoscope" pluginDesc="s(M)exoscope"
-              pluginManufacturer="Smartelectronix" pluginManufacturerCode="Manu"
+              pluginManufacturer="Kwwala" pluginManufacturerCode="Manu"
               pluginCode="Pjfj" pluginChannelConfigs="" pluginIsSynth="0" pluginWantsMidiIn="0"
               pluginProducesMidiOut="0" pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="0"
               pluginAUExportPrefix="sMexoscopeAU" pluginRTASCategory="" aaxIdentifier="com.yourcompany.sMexoscope"
-              pluginAAXCategory="2" companyName="Smartelectronix" pluginFormats="buildAU,buildVST3"
+              pluginAAXCategory="2" companyName="Kwwala" pluginFormats="buildAU,buildVST3"
               jucerFormatVersion="1" companyWebsite="https://github.com/hollance/sMexoscope"
               addUsingNamespaceToJuceHeader="0" buildStandalone="0" enableIAA="0"
               cppLanguageStandard="20">

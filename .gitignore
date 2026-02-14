@@ -4,3 +4,4 @@ JuceLibraryCode
 *.filtergraph
 .idea
 cmake-build-debug
+build
