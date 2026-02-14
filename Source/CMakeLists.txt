@@ -6,7 +6,7 @@ juce_add_plugin(mexoscope
         # ICON_SMALL ...
         COMPANY_NAME "Kwwala"                          # Specify the name of the plugin's author
         BUNDLE_ID "com.kwwala.mexoscope"
-        COMPANY_WEBSITE "https://github.com/hollance/sMexoscope"
+        COMPANY_WEBSITE "https://github.com/kwwala/mexoscope"
         IS_SYNTH FALSE                       # Is this a synth or an effect?
         NEEDS_MIDI_INPUT FALSE               # Does the plugin need midi input?
         NEEDS_MIDI_OUTPUT FALSE              # Does the plugin need midi output?

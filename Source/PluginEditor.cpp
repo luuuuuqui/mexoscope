@@ -2,10 +2,10 @@
 #include "PluginEditor.h"
 #include "UiTheme.h"
 
-SmexoscopeAudioProcessorEditor::SmexoscopeAudioProcessorEditor(SmexoscopeAudioProcessor& p)
+MexoscopeAudioProcessorEditor::MexoscopeAudioProcessorEditor(MexoscopeAudioProcessor& p)
     : juce::AudioProcessorEditor(&p),
       audioProcessor(p),
-      effect(audioProcessor.smexoscope),
+      effect(audioProcessor.mexoscope),
       tooltipWindow(this, 700),
       waveDisplay(effect)
 {
@@ -46,20 +46,20 @@ SmexoscopeAudioProcessorEditor::SmexoscopeAudioProcessorEditor(SmexoscopeAudioPr
     addAndMakeVisible(dcKillButton);
     addAndMakeVisible(rightChannelButton);
 
-    timeKnob.setValue(effect.getParameter(Smexoscope::kTimeWindow));
-    ampKnob.setValue(effect.getParameter(Smexoscope::kAmpWindow));
-    intTrigSpeedKnob.setValue(effect.getParameter(Smexoscope::kTriggerSpeed));
-    retrigThreshKnob.setValue(effect.getParameter(Smexoscope::kTriggerLimit));
-    retrigLevelSlider.setValue(effect.getParameter(Smexoscope::kTriggerLevel));
+    timeKnob.setValue(effect.getParameter(Mexoscope::kTimeWindow));
+    ampKnob.setValue(effect.getParameter(Mexoscope::kAmpWindow));
+    intTrigSpeedKnob.setValue(effect.getParameter(Mexoscope::kTriggerSpeed));
+    retrigThreshKnob.setValue(effect.getParameter(Mexoscope::kTriggerLimit));
+    retrigLevelSlider.setValue(effect.getParameter(Mexoscope::kTriggerLevel));
 
-    const int triggerIndex = juce::jlimit(0, Smexoscope::kNumTriggerTypes - 1,
-                                          int(effect.getParameter(Smexoscope::kTriggerType) * float(Smexoscope::kNumTriggerTypes) + 0.0001f));
+    const int triggerIndex = juce::jlimit(0, Mexoscope::kNumTriggerTypes - 1,
+                                          int(effect.getParameter(Mexoscope::kTriggerType) * float(Mexoscope::kNumTriggerTypes) + 0.0001f));
     triggerModeBox.setSelectedItemIndex(triggerIndex, juce::dontSendNotification);
 
-    syncRedrawButton.setToggleState(effect.getParameter(Smexoscope::kSyncDraw) > 0.5f, juce::dontSendNotification);
-    freezeButton.setToggleState(effect.getParameter(Smexoscope::kFreeze) > 0.5f, juce::dontSendNotification);
-    dcKillButton.setToggleState(effect.getParameter(Smexoscope::kDCKill) > 0.5f, juce::dontSendNotification);
-    rightChannelButton.setToggleState(effect.getParameter(Smexoscope::kChannel) > 0.5f, juce::dontSendNotification);
+    syncRedrawButton.setToggleState(effect.getParameter(Mexoscope::kSyncDraw) > 0.5f, juce::dontSendNotification);
+    freezeButton.setToggleState(effect.getParameter(Mexoscope::kFreeze) > 0.5f, juce::dontSendNotification);
+    dcKillButton.setToggleState(effect.getParameter(Mexoscope::kDCKill) > 0.5f, juce::dontSendNotification);
+    rightChannelButton.setToggleState(effect.getParameter(Mexoscope::kChannel) > 0.5f, juce::dontSendNotification);
 
     constrainer.setSizeLimits(840, 400, 1800, 1000);
     setResizable(true, true);
@@ -70,13 +70,13 @@ SmexoscopeAudioProcessorEditor::SmexoscopeAudioProcessorEditor(SmexoscopeAudioPr
     startTimerHz(30);
 }
 
-SmexoscopeAudioProcessorEditor::~SmexoscopeAudioProcessorEditor()
+MexoscopeAudioProcessorEditor::~MexoscopeAudioProcessorEditor()
 {
     stopTimer();
     setLookAndFeel(nullptr);
 }
 
-void SmexoscopeAudioProcessorEditor::configureKnob(juce::Slider& knob, const double defaultValue,
+void MexoscopeAudioProcessorEditor::configureKnob(juce::Slider& knob, const double defaultValue,
                                                    const juce::String& tooltip)
 {
     knob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -90,7 +90,7 @@ void SmexoscopeAudioProcessorEditor::configureKnob(juce::Slider& knob, const dou
                              true);
 }
 
-void SmexoscopeAudioProcessorEditor::configureToggle(juce::ToggleButton& button, const juce::String& text,
+void MexoscopeAudioProcessorEditor::configureToggle(juce::ToggleButton& button, const juce::String& text,
                                                      const juce::String& tooltip)
 {
     button.setButtonText(text);
@@ -98,7 +98,7 @@ void SmexoscopeAudioProcessorEditor::configureToggle(juce::ToggleButton& button,
     button.setClickingTogglesState(true);
 }
 
-juce::String SmexoscopeAudioProcessorEditor::formatMetricValue(const float value) const
+juce::String MexoscopeAudioProcessorEditor::formatMetricValue(const float value) const
 {
     if (value < 1000.0f) {
         return juce::String(value, 3);
@@ -107,12 +107,12 @@ juce::String SmexoscopeAudioProcessorEditor::formatMetricValue(const float value
     return juce::String(int(value));
 }
 
-juce::String SmexoscopeAudioProcessorEditor::formatAnalysisValue(const float value, const int decimals) const
+juce::String MexoscopeAudioProcessorEditor::formatAnalysisValue(const float value, const int decimals) const
 {
     return juce::String(value, decimals);
 }
 
-void SmexoscopeAudioProcessorEditor::drawSection(juce::Graphics& g, const juce::Rectangle<int> bounds,
+void MexoscopeAudioProcessorEditor::drawSection(juce::Graphics& g, const juce::Rectangle<int> bounds,
                                                  const juce::String& title) const
 {
     const auto section = bounds.toFloat();
@@ -127,7 +127,7 @@ void SmexoscopeAudioProcessorEditor::drawSection(juce::Graphics& g, const juce::
     g.drawText(title, bounds.reduced(ui::kSectionPadding, 0).removeFromTop(24), juce::Justification::centredLeft, false);
 }
 
-void SmexoscopeAudioProcessorEditor::paint(juce::Graphics& g)
+void MexoscopeAudioProcessorEditor::paint(juce::Graphics& g)
 {
     g.fillAll(ui::kBackgroundColour);
 
@@ -175,7 +175,7 @@ void SmexoscopeAudioProcessorEditor::paint(juce::Graphics& g)
     }
 }
 
-void SmexoscopeAudioProcessorEditor::resized()
+void MexoscopeAudioProcessorEditor::resized()
 {
     auto content = getLocalBounds().reduced(ui::kOuterPadding);
 
@@ -268,28 +268,28 @@ void SmexoscopeAudioProcessorEditor::resized()
     rightChannelButton.setBounds(optionsInner.removeFromTop(optionHeight));
 }
 
-void SmexoscopeAudioProcessorEditor::timerCallback()
+void MexoscopeAudioProcessorEditor::timerCallback()
 {
     waveDisplay.repaint();
     updateParameters();
 }
 
-void SmexoscopeAudioProcessorEditor::updateParameters()
+void MexoscopeAudioProcessorEditor::updateParameters()
 {
-    effect.setParameter(Smexoscope::kTimeWindow, float(timeKnob.getValue()));
-    effect.setParameter(Smexoscope::kAmpWindow, float(ampKnob.getValue()));
-    effect.setParameter(Smexoscope::kTriggerSpeed, float(intTrigSpeedKnob.getValue()));
-    effect.setParameter(Smexoscope::kTriggerLimit, float(retrigThreshKnob.getValue()));
-    effect.setParameter(Smexoscope::kTriggerLevel, float(retrigLevelSlider.getValue()));
+    effect.setParameter(Mexoscope::kTimeWindow, float(timeKnob.getValue()));
+    effect.setParameter(Mexoscope::kAmpWindow, float(ampKnob.getValue()));
+    effect.setParameter(Mexoscope::kTriggerSpeed, float(intTrigSpeedKnob.getValue()));
+    effect.setParameter(Mexoscope::kTriggerLimit, float(retrigThreshKnob.getValue()));
+    effect.setParameter(Mexoscope::kTriggerLevel, float(retrigLevelSlider.getValue()));
 
     const int selectedMode = juce::jmax(0, triggerModeBox.getSelectedItemIndex());
-    effect.setParameter(Smexoscope::kTriggerType,
-                        float(selectedMode) / float(Smexoscope::kNumTriggerTypes));
+    effect.setParameter(Mexoscope::kTriggerType,
+                        float(selectedMode) / float(Mexoscope::kNumTriggerTypes));
 
-    effect.setParameter(Smexoscope::kSyncDraw, syncRedrawButton.getToggleState() ? 1.0f : 0.0f);
-    effect.setParameter(Smexoscope::kFreeze, freezeButton.getToggleState() ? 1.0f : 0.0f);
-    effect.setParameter(Smexoscope::kDCKill, dcKillButton.getToggleState() ? 1.0f : 0.0f);
-    effect.setParameter(Smexoscope::kChannel, rightChannelButton.getToggleState() ? 1.0f : 0.0f);
+    effect.setParameter(Mexoscope::kSyncDraw, syncRedrawButton.getToggleState() ? 1.0f : 0.0f);
+    effect.setParameter(Mexoscope::kFreeze, freezeButton.getToggleState() ? 1.0f : 0.0f);
+    effect.setParameter(Mexoscope::kDCKill, dcKillButton.getToggleState() ? 1.0f : 0.0f);
+    effect.setParameter(Mexoscope::kChannel, rightChannelButton.getToggleState() ? 1.0f : 0.0f);
 
     timeValueText = formatMetricValue(float(std::pow(10.0, 1.5 - timeKnob.getValue() * 5.0)));
     ampValueText = formatMetricValue(float(std::pow(10.0, ampKnob.getValue() * 6.0 - 3.0)));

@@ -8,8 +8,8 @@ float mapVirtualYToScope(const juce::Rectangle<float>& scopeArea, const float vi
 }
 }
 
-WaveDisplay::WaveDisplay(Smexoscope& smexoscope)
-    : effect(smexoscope)
+WaveDisplay::WaveDisplay(Mexoscope& mexoscope)
+    : effect(mexoscope)
 {
 }
 
@@ -49,7 +49,7 @@ float WaveDisplay::scopeYToLinear(const float yInScope) const
     const float normalized = (scope.getHeight() > 1.0f) ? ((yInScope - scope.getY()) / scope.getHeight()) : 0.5f;
     const float virtualY = normalized * float(OSC_HEIGHT);
 
-    const float gain = std::pow(10.0f, effect.getParameter(Smexoscope::kAmpWindow) * 6.0f - 3.0f);
+    const float gain = std::pow(10.0f, effect.getParameter(Mexoscope::kAmpWindow) * 6.0f - 3.0f);
     return (-2.0f * (virtualY + 1.0f) / float(OSC_HEIGHT) + 1.0f) / gain;
 }
 
@@ -107,9 +107,9 @@ void WaveDisplay::paint(juce::Graphics& g)
         g.drawHorizontalLine(int(y), scopeArea.getX(), scopeArea.getRight());
     }
 
-    const int triggerType = int(effect.getParameter(Smexoscope::kTriggerType) * float(Smexoscope::kNumTriggerTypes) + 0.0001f);
-    if (triggerType == Smexoscope::kTriggerRising || triggerType == Smexoscope::kTriggerFalling) {
-        const float yVirtual = 1.0f + (1.0f - effect.getParameter(Smexoscope::kTriggerLevel)) * float(OSC_HEIGHT - 2);
+    const int triggerType = int(effect.getParameter(Mexoscope::kTriggerType) * float(Mexoscope::kNumTriggerTypes) + 0.0001f);
+    if (triggerType == Mexoscope::kTriggerRising || triggerType == Mexoscope::kTriggerFalling) {
+        const float yVirtual = 1.0f + (1.0f - effect.getParameter(Mexoscope::kTriggerLevel)) * float(OSC_HEIGHT - 2);
         g.setColour(ui::kTriggerLineColour);
         g.drawHorizontalLine(int(mapVirtualYToScope(scopeArea, yVirtual)), scopeArea.getX(), scopeArea.getRight());
     }
@@ -117,8 +117,8 @@ void WaveDisplay::paint(juce::Graphics& g)
     g.setColour(ui::kZeroLineColour);
     g.drawHorizontalLine(int(mapVirtualYToScope(scopeArea, float(OSC_CENTER))), scopeArea.getX(), scopeArea.getRight());
 
-    const auto& points = (effect.getParameter(Smexoscope::kSyncDraw) > 0.5f) ? effect.getCopy() : effect.getPeaks();
-    const double samplesPerPixel = std::pow(10.0, effect.getParameter(Smexoscope::kTimeWindow) * 5.0 - 1.5);
+    const auto& points = (effect.getParameter(Mexoscope::kSyncDraw) > 0.5f) ? effect.getCopy() : effect.getPeaks();
+    const double samplesPerPixel = std::pow(10.0, effect.getParameter(Mexoscope::kTimeWindow) * 5.0 - 1.5);
 
     juce::Graphics::ScopedSaveState waveformState(g);
     g.reduceClipRegion(scopeArea.getSmallestIntegerContainer());

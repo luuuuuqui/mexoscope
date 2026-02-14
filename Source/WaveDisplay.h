@@ -3,7 +3,7 @@
 #include <JuceHeader.h>
 #include <optional>
 #include "Defines.h"
-#include "Smexoscope.h"
+#include "Mexoscope.h"
 
 class WaveDisplay : public juce::Component
 {
@@ -19,7 +19,7 @@ public:
         bool infiniteHz = false;
     };
 
-    explicit WaveDisplay(Smexoscope& effect);
+    explicit WaveDisplay(Mexoscope& effect);
 
     void paint(juce::Graphics& g) override;
 
@@ -37,7 +37,7 @@ private:
     float scopeXToSamples(float xInScope, double samplesPerPixel) const;
     float scopeYToLinear(float yInScope) const;
 
-    Smexoscope& effect;
+    Mexoscope& effect;
 
     juce::Point<int> where { -1, -1 };
     std::optional<CursorMetrics> cursorMetrics;

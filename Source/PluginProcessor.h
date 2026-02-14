@@ -1,13 +1,13 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "Smexoscope.h"
+#include "Mexoscope.h"
 
-class SmexoscopeAudioProcessor : public juce::AudioProcessor
+class MexoscopeAudioProcessor : public juce::AudioProcessor
 {
 public:
-    SmexoscopeAudioProcessor();
-    ~SmexoscopeAudioProcessor() override;
+    MexoscopeAudioProcessor();
+    ~MexoscopeAudioProcessor() override;
 
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -34,8 +34,8 @@ public:
     void getStateInformation(juce::MemoryBlock& destData) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
 
-    Smexoscope smexoscope;
+    Mexoscope mexoscope;
 
 private:
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SmexoscopeAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MexoscopeAudioProcessor)
 };

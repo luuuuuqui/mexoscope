@@ -1,14 +1,14 @@
-# s(M)exoscope
+# mexoscope
 
-This is Bram de Jong's classic **s(M)exoscope** plug-in with the source code cleaned up, documented, and modernized for JUCE 8.
+This is Bram de Jong's classic **mexoscope** plug-in with the source code cleaned up, documented, and modernized for JUCE 8.
 
-![s(M)exoscope](Docs/oscilloscope_full.png)
+![mexoscope](Docs/oscilloscope_full.png)
 
 The original smartelectronix site is defunct now but Bram was kind enough to upload [his plug-in source code](https://github.com/bdejong/smartelectronix/tree/master) to GitHub.
 
-This version is based on [Armando Montanez's JUCE port](https://github.com/armandomontanez/smexoscope) from 2016 and [Jason Perez's fixes](https://github.com/jasonmarkperez/smexoscope-mac). However, I changed almost everything. :smile:
+This version is based on [Armando Montanez's JUCE port](https://github.com/armandomontanez/mexoscope) from 2016 and [Jason Perez's fixes](https://github.com/jasonmarkperez/mexoscope-mac). However, I changed almost everything. :smile:
 
-See also [my blog post](https://audiodev.blog/smexoscope/) about this plug-in.
+See also [my blog post](https://audiodev.blog/mexoscope/) about this plug-in.
 
 ## Installation instructions
 
@@ -18,11 +18,11 @@ See also [my blog post](https://audiodev.blog/smexoscope/) about this plug-in.
 
 The Mac version of the plug-in is signed and notarized.
 
-1. Download **sMexoscope-Mac.zip** from the [Releases page](https://github.com/hollance/sMexoscope/releases).
-2. In your **Downloads** folder, double-click **sMexoscope-Mac.zip** to unzip the file.
-3. Copy **s(M)exoscope.component** to the folder **/Library/Audio/Plug-Ins/Components**
-4. Copy **s(M)exoscope.vst3** to the folder **/Library/Audio/Plug-Ins/VST3**
-5. In your DAW, look for **Smartelectronix > s(M)exoscope**. You can insert this plug-in on a mono or stereo track.
+1. Download **mexoscope-Mac.zip** from the [Releases page](https://github.com/kwwala/mexoscope/releases).
+2. In your **Downloads** folder, double-click **mexoscope-Mac.zip** to unzip the file.
+3. Copy **mexoscope.component** to the folder **/Library/Audio/Plug-Ins/Components**
+4. Copy **mexoscope.vst3** to the folder **/Library/Audio/Plug-Ins/VST3**
+5. In your DAW, look for **Smartelectronix > mexoscope**. You can insert this plug-in on a mono or stereo track.
 
 If the AU version of the plug-in is not visible in your DAW, open **Applications/Utilities/Terminal**. Type the following and press the enter key:
 
@@ -34,19 +34,19 @@ Then restart your DAW. Now the plug-in should be visible. If not, reboot your co
 
 ### Windows
 
-1. Download **sMexoscope-Windows.zip** from the [Releases page](https://github.com/hollance/sMexoscope/releases).
-2. In your **Downloads** folder, right-click **sMexoscope-Windows.zip** and choose **Extract All...** to unzip the file.
-3. Copy **s(M)exoscope.vst3** to the folder **C:\Program Files\Common Files\VST3**
-4. In your DAW, look for **Smartelectronix > s(M)exoscope**. You can insert this plug-in on a mono or stereo track.
+1. Download **mexoscope-Windows.zip** from the [Releases page](https://github.com/kwwala/mexoscope/releases).
+2. In your **Downloads** folder, right-click **mexoscope-Windows.zip** and choose **Extract All...** to unzip the file.
+3. Copy **mexoscope.vst3** to the folder **C:\Program Files\Common Files\VST3**
+4. In your DAW, look for **Smartelectronix > mexoscope**. You can insert this plug-in on a mono or stereo track.
 
 ## How to use this plug-in
 
 [Read the manual](Docs/Manual.md) (original by Kerrydan)
 
-Notes: 
+Notes:
 
-- The External trigger mode is not implemented in this version. 
-- The docs mention a "modular" version but only the standard version is available.
+* The External trigger mode is not implemented in this version.
+* The docs mention a "modular" version but only the standard version is available.
 
 ## Building from source code
 
@@ -54,22 +54,22 @@ Notes:
 
 Brief instructions:
 
-- Install JUCE 8 or newer.
-- Open **s(M)exoscope.jucer** in Projucer and export to your IDE.
-- Select the **VST3** or **AU** target and build.
+* Install JUCE 8 or newer.
+* Open **mexoscope.jucer** in Projucer and export to your IDE.
+* Select the **VST3** or **AU** target and build.
 
 ## To-do list
 
-- [x] Improve drawing. Stuff seems to be off by a few pixels.
-- [x] Provide binaries so you don't have to compile this from scratch.
-- [ ] Dark mode. Bram's repo has dark mode images so why not use them!
-- [ ] Click on the text for the AMP knob to switch between linear and decibel display.
-- [ ] Make the INTERNAL TRIG SPEED knob independent of the sample rate.
-- [ ] Instead of simply clipping samples that go outside of visible range, show them in red to indicate they've been clipped.
-- [ ] Use a path to draw the interpolated lines instead of doing the interpolation manually.
-- [ ] Don't store two Point objects per pixel but use a custom struct.
-- [ ] Make thread-safe. The `peaks` array is written to by the audio code and read from the UI thread.
-- [ ] Retina/HiDPI graphics. Resizable UI.
+* \[x] Improve drawing. Stuff seems to be off by a few pixels.
+* \[x] Provide binaries so you don't have to compile this from scratch.
+* \[ ] Dark mode. Bram's repo has dark mode images so why not use them!
+* \[ ] Click on the text for the AMP knob to switch between linear and decibel display.
+* \[ ] Make the INTERNAL TRIG SPEED knob independent of the sample rate.
+* \[ ] Instead of simply clipping samples that go outside of visible range, show them in red to indicate they've been clipped.
+* \[ ] Use a path to draw the interpolated lines instead of doing the interpolation manually.
+* \[ ] Don't store two Point objects per pixel but use a custom struct.
+* \[ ] Make thread-safe. The `peaks` array is written to by the audio code and read from the UI thread.
+* \[ ] Retina/HiDPI graphics. Resizable UI.
 
 From the original `todo.txt`:
 
@@ -106,7 +106,7 @@ revision history
 20031203 :: first release
 ```
 
----
+***
 
 ```text
 [CHANGELOG]
@@ -135,7 +135,7 @@ c = change
 Copyright (C) 2003 Bram de Jong
 
 ```text
-Bram @ Smartelectronix presents :: The S(m)exoscope
+Bram @ Smartelectronix presents :: The Mexoscope
 ---------------------------------------------------
 
 
@@ -146,7 +146,7 @@ sophia @ smartelectronix.com    :: Mac port
 armando                         :: Multiplatform JUCE port
 
 
-Smexoscope is not an effect, nor is it a synthesiser, don't
+Mexoscope is not an effect, nor is it a synthesiser, don't
 expect it to generate noise: it's a visualisation only plugin!
 
 Useful for looking at waveforms and very useful for developers.

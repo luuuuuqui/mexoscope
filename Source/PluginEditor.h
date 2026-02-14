@@ -5,12 +5,12 @@
 #include "PluginProcessor.h"
 #include "WaveDisplay.h"
 
-class SmexoscopeAudioProcessorEditor : public juce::AudioProcessorEditor,
+class MexoscopeAudioProcessorEditor : public juce::AudioProcessorEditor,
                                        private juce::Timer
 {
 public:
-    explicit SmexoscopeAudioProcessorEditor(SmexoscopeAudioProcessor&);
-    ~SmexoscopeAudioProcessorEditor() override;
+    explicit MexoscopeAudioProcessorEditor(MexoscopeAudioProcessor&);
+    ~MexoscopeAudioProcessorEditor() override;
 
     void paint(juce::Graphics&) override;
     void resized() override;
@@ -27,8 +27,8 @@ private:
 
     void drawSection(juce::Graphics& g, juce::Rectangle<int> bounds, const juce::String& title) const;
 
-    SmexoscopeAudioProcessor& audioProcessor;
-    Smexoscope& effect;
+    MexoscopeAudioProcessor& audioProcessor;
+    Mexoscope& effect;
 
     ModernLookAndFeel lookAndFeel;
     juce::TooltipWindow tooltipWindow;
@@ -78,5 +78,5 @@ private:
     juce::String analysisMsText { "--" };
     juce::String analysisHzText { "--" };
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SmexoscopeAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MexoscopeAudioProcessorEditor)
 };

@@ -1,74 +1,74 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-SmexoscopeAudioProcessor::SmexoscopeAudioProcessor()
+MexoscopeAudioProcessor::MexoscopeAudioProcessor()
     : AudioProcessor(BusesProperties().withInput("Input", juce::AudioChannelSet::stereo(), true)
                                       .withOutput("Output", juce::AudioChannelSet::stereo(), true))
 {
 }
 
-SmexoscopeAudioProcessor::~SmexoscopeAudioProcessor()
+MexoscopeAudioProcessor::~MexoscopeAudioProcessor()
 {
 }
 
-const juce::String SmexoscopeAudioProcessor::getName() const
+const juce::String MexoscopeAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool SmexoscopeAudioProcessor::acceptsMidi() const
+bool MexoscopeAudioProcessor::acceptsMidi() const
 {
     return false;
 }
 
-bool SmexoscopeAudioProcessor::producesMidi() const
+bool MexoscopeAudioProcessor::producesMidi() const
 {
     return false;
 }
 
-bool SmexoscopeAudioProcessor::isMidiEffect() const
+bool MexoscopeAudioProcessor::isMidiEffect() const
 {
     return false;
 }
 
-double SmexoscopeAudioProcessor::getTailLengthSeconds() const
+double MexoscopeAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int SmexoscopeAudioProcessor::getNumPrograms()
+int MexoscopeAudioProcessor::getNumPrograms()
 {
     return 1;
 }
 
-int SmexoscopeAudioProcessor::getCurrentProgram()
+int MexoscopeAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void SmexoscopeAudioProcessor::setCurrentProgram(int)
+void MexoscopeAudioProcessor::setCurrentProgram(int)
 {
 }
 
-const juce::String SmexoscopeAudioProcessor::getProgramName(int)
+const juce::String MexoscopeAudioProcessor::getProgramName(int)
 {
     return {};
 }
 
-void SmexoscopeAudioProcessor::changeProgramName(int, const juce::String&)
+void MexoscopeAudioProcessor::changeProgramName(int, const juce::String&)
 {
 }
 
-void SmexoscopeAudioProcessor::prepareToPlay(double sampleRate, int)
+void MexoscopeAudioProcessor::prepareToPlay(double sampleRate, int)
 {
-    smexoscope.prepareToPlay(sampleRate);
+    mexoscope.prepareToPlay(sampleRate);
 }
 
-void SmexoscopeAudioProcessor::releaseResources()
+void MexoscopeAudioProcessor::releaseResources()
 {
 }
 
-bool SmexoscopeAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
+bool MexoscopeAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const
 {
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
     &&  layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo()) {
@@ -80,7 +80,7 @@ bool SmexoscopeAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts
     return true;
 }
 
-void SmexoscopeAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer&)
+void MexoscopeAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer&)
 {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
@@ -90,31 +90,31 @@ void SmexoscopeAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, ju
         buffer.clear(i, 0, buffer.getNumSamples());
     }
 
-    smexoscope.process(buffer);
+    mexoscope.process(buffer);
 }
 
-bool SmexoscopeAudioProcessor::hasEditor() const
+bool MexoscopeAudioProcessor::hasEditor() const
 {
     return true;
 }
 
-juce::AudioProcessorEditor* SmexoscopeAudioProcessor::createEditor()
+juce::AudioProcessorEditor* MexoscopeAudioProcessor::createEditor()
 {
-    return new SmexoscopeAudioProcessorEditor(*this);
+    return new MexoscopeAudioProcessorEditor(*this);
 }
 
-void SmexoscopeAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
+void MexoscopeAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
-    destData.setSize(smexoscope.getSaveBlockSize());
-    destData.copyFrom(smexoscope.getSaveBlock(), 0, smexoscope.getSaveBlockSize());
+    destData.setSize(mexoscope.getSaveBlockSize());
+    destData.copyFrom(mexoscope.getSaveBlock(), 0, mexoscope.getSaveBlockSize());
 }
 
-void SmexoscopeAudioProcessor::setStateInformation(const void* data, int)
+void MexoscopeAudioProcessor::setStateInformation(const void* data, int)
 {
-    std::memcpy(smexoscope.getSaveBlock(), data, smexoscope.getSaveBlockSize());
+    std::memcpy(mexoscope.getSaveBlock(), data, mexoscope.getSaveBlockSize());
 }
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new SmexoscopeAudioProcessor();
+    return new MexoscopeAudioProcessor();
 }
